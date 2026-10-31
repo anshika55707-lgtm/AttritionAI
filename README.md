@@ -176,6 +176,19 @@ It aims to demonstrate how data analytics and machine learning can support bette
 
 ### 2. Employee Analysis
 ![Employee Analysis](screenshots/Screenshot%20%28207%29.png)
+## 📊 Model Performance
+
+The Employee Attrition Prediction system uses Logistic Regression to predict employee attrition.
+
+| Evaluation Metric | Score |
+|---|---:|
+| Accuracy | 75.17% |
+| Precision | 34.88% |
+| Recall | 63.83% |
+| F1-Score | 45.11% |
+| ROC-AUC Score | 80.32% |
+
+The model evaluation helps assess its ability to identify employees who may be at risk of leaving the organization.
 
 ### 3. Risk Prediction
 ![Risk Prediction](screenshots/Screenshot%20%28208%29.png)
