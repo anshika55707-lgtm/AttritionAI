@@ -1,0 +1,702 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Project | AttritionAI</title>
+
+    <style>
+        :root {
+            --navy: #11162e;
+            --navy-light: #1c2342;
+            --purple: #8174f7;
+            --purple-light: #eeebff;
+            --bg: #f5f6fc;
+            --text: #222944;
+            --muted: #8189a3;
+            --border: #e8eaf4;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .layout {
+            min-height: 100vh;
+        }
+
+        /* Fixed Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            background: var(--navy);
+            color: white;
+            padding: 30px 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: 750;
+            letter-spacing: -0.7px;
+            padding: 0 12px;
+            margin-bottom: 10px;
+        }
+
+        .brand span {
+            color: var(--purple);
+        }
+
+        .brand-caption {
+            color: #929bb9;
+            font-size: 11px;
+            padding: 0 12px;
+            margin-bottom: 42px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .nav-label {
+            color: #77809f;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 0 12px;
+            margin-bottom: 13px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 14px 15px;
+            margin-bottom: 8px;
+            border-radius: 11px;
+            color: #c0c6dc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: #252c4c;
+            color: white;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(110deg, #7567ed, #6255d5);
+            color: white;
+            box-shadow: 0 7px 20px #6657d333;
+        }
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 17px 12px 0;
+            border-top: 1px solid #2b3150;
+            color: #8f98b6;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 250px;
+            padding: 35px 42px;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .eyebrow {
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 11px;
+            font-weight: 750;
+            margin-bottom: 8px;
+        }
+
+        .header h1 {
+            font-size: 29px;
+            letter-spacing: -0.8px;
+            margin-bottom: 8px;
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .header-badge {
+            padding: 10px 14px;
+            border-radius: 30px;
+            background: var(--purple-light);
+            color: #6656d8;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(115deg, #171d3c, #39356f 65%, #6e60d7);
+            color: white;
+            padding: 36px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            border: 1px solid #ffffff20;
+            border-radius: 50%;
+            right: -60px;
+            top: -95px;
+            box-shadow: 0 0 0 30px #ffffff08,
+                        0 0 0 60px #ffffff05;
+        }
+
+        .hero-label {
+            color: #c7c0ff;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: 750;
+            margin-bottom: 14px;
+        }
+
+        .hero h2 {
+            font-size: 28px;
+            line-height: 1.4;
+            max-width: 650px;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            max-width: 720px;
+            line-height: 1.9;
+            color: #e0e2f5;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 23px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tag {
+            padding: 9px 13px;
+            border: 1px solid #ffffff30;
+            border-radius: 8px;
+            color: #f0efff;
+            background: #ffffff0c;
+            font-size: 12px;
+        }
+
+        /* Content Cards */
+        .section-heading {
+            font-size: 19px;
+            margin-bottom: 17px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 24px #20294b05;
+            transition: transform 0.2s ease,
+                        box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px #20294b0d;
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .card-icon {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: var(--purple-light);
+            color: #6556d4;
+            font-size: 21px;
+            flex-shrink: 0;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .card p {
+            color: #727b94;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .card ul {
+            padding-left: 19px;
+            color: #727b94;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .card li {
+            padding-left: 3px;
+        }
+
+        /* Workflow */
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .workflow-step {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 17px;
+        }
+
+        .step-number {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--purple-light);
+            color: #6556d4;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .workflow-step h3 {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .workflow-step p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* Technology Stack */
+        .tech-section {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 22px;
+        }
+
+        .tech-section h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 19px;
+        }
+
+        .tech {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 9px;
+            background: #f5f4ff;
+            border: 1px solid #e9e6ff;
+            color: #5e50c3;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .tech::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--purple);
+        }
+
+        /* Responsible Use */
+        .notice {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 20px;
+            margin-top: 22px;
+            border-radius: 14px;
+            background: #fbf9ff;
+            border: 1px solid #e9e4ff;
+        }
+
+        .notice-icon {
+            font-size: 20px;
+            color: #7567ed;
+        }
+
+        .notice h3 {
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .notice p {
+            color: #727b94;
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        .footer {
+            margin-top: 28px;
+            padding: 20px 0 5px;
+            border-top: 1px solid var(--border);
+            color: #8b92a8;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 1050px) {
+            .main {
+                padding: 28px 25px;
+            }
+
+            .workflow {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 20px 15px;
+            }
+
+            .brand-caption,
+            .nav-label,
+            .sidebar-footer {
+                display: none;
+            }
+
+            .brand {
+                margin-bottom: 18px;
+            }
+
+            .sidebar nav {
+                display: flex;
+                gap: 6px;
+                overflow-x: auto;
+            }
+
+            .nav-item {
+                flex-shrink: 0;
+                padding: 11px;
+                margin: 0;
+                font-size: 12px;
+            }
+
+            .nav-icon {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 25px 16px;
+            }
+
+            .header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .hero {
+                padding: 26px 22px;
+            }
+
+            .hero h2 {
+                font-size: 23px;
+            }
+
+            .grid,
+            .workflow {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="brand">Attrition<span>AI</span></div>
+        <div class="brand-caption">Employee Analytics</div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <nav>
+            <a class="nav-item" href="{{ url_for('home') }}">
+                <span class="nav-icon">▦</span>
+                Dashboard
+            </a>
+
+            <a class="nav-item" href="{{ url_for('analysis') }}">
+                <span class="nav-icon">▥</span>
+                Employee Analysis
+            </a>
+
+            <a class="nav-item" href="{{ url_for('predict') }}">
+                <span class="nav-icon">⌁</span>
+                Risk Prediction
+            </a>
+
+            <a class="nav-item active" href="{{ url_for('about') }}">
+                <span class="nav-icon">ⓘ</span>
+                About Project
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <strong>AttritionAI</strong><br>
+            ML-powered employee insights
+        </div>
+    </aside>
+
+    <main class="main">
+
+        <header class="header">
+            <div>
+                <div class="eyebrow">Project Information</div>
+                <h1>About AttritionAI</h1>
+                <p class="muted">
+                    Explore the project's objectives, workflow and technology stack.
+                </p>
+            </div>
+
+            <div class="header-badge">Machine Learning Project</div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-label">Employee Analytics Platform</div>
+            <h2>Understanding Employee Attrition Through Machine Learning</h2>
+            <p>
+                AttritionAI is a Flask-based machine learning web application
+                that estimates employee attrition risk from selected employee
+                details. It brings together an interactive dashboard, employee
+                analytics and a prediction interface to demonstrate how data
+                can support workforce analysis.
+            </p>
+
+            <div class="hero-tags">
+                <span class="hero-tag">Employee Analytics</span>
+                <span class="hero-tag">Predictive Modeling</span>
+                <span class="hero-tag">Flask Web Application</span>
+            </div>
+        </section>
+
+        <h2 class="section-heading">Project Overview</h2>
+
+        <section class="grid">
+
+            <article class="card">
+                <div class="card-top">
+                    <div class="card-icon">◎</div>
+                    <h3>Project Objective</h3>
+                </div>
+                <p>
+                    The objective is to explore employee data and estimate
+                    whether an employee may leave an organization. The project
+                    demonstrates how machine learning can be used to study
+                    attrition patterns and support workforce analysis.
+                </p>
+            </article>
+
+            <article class="card">
+                <div class="card-top">
+                    <div class="card-icon">◈</div>
+                    <h3>Machine Learning Model</h3>
+                </div>
+                <p>
+                    The application loads a previously trained classification
+                    model from the models folder. The model processes the
+                    employee inputs and returns a predicted class and an
+                    estimated attrition probability.
+                </p>
+            </article>
+
+            <article class="card">
+                <div class="card-top">
+                    <div class="card-icon">▤</div>
+                    <h3>Key Features</h3>
+                </div>
+                <ul>
+                    <li>Dashboard with employee summary statistics</li>
+                    <li>Department and employee attrition analysis</li>
+                    <li>Employee risk prediction form</li>
+                    <li>Prediction result and probability display</li>
+                    <li>Project overview and responsible-use information</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <div class="card-top">
+                    <div class="card-icon">⌘</div>
+                    <h3>Model Evaluation</h3>
+                </div>
+                <p>
+                    Model performance can be assessed using Accuracy,
+                    Precision, Recall, F1-score and ROC-AUC. These metrics
+                    provide different perspectives on classification quality
+                    and are useful when evaluating attrition predictions.
+                </p>
+            </article>
+
+        </section>
+
+        <h2 class="section-heading" style="margin-top: 30px;">
+            How the Application Works
+        </h2>
+
+        <section class="workflow">
+            <article class="workflow-step">
+                <div class="step-number">01</div>
+                <h3>Enter Details</h3>
+                <p>The user submits selected employee details through the form.</p>
+            </article>
+
+            <article class="workflow-step">
+                <div class="step-number">02</div>
+                <h3>Process Inputs</h3>
+                <p>Flask organizes the submitted information for the model.</p>
+            </article>
+
+            <article class="workflow-step">
+                <div class="step-number">03</div>
+                <h3>Predict Risk</h3>
+                <p>The saved classification model generates its prediction.</p>
+            </article>
+
+            <article class="workflow-step">
+                <div class="step-number">04</div>
+                <h3>View Results</h3>
+                <p>The result page displays the predicted class and probability.</p>
+            </article>
+        </section>
+
+        <section class="tech-section">
+            <h3>Technology Stack</h3>
+            <p class="muted">
+                Technologies used to build the application's interface,
+                data processing and machine learning workflow.
+            </p>
+
+            <div class="tech-list">
+                <span class="tech">Python</span>
+                <span class="tech">Flask</span>
+                <span class="tech">Pandas</span>
+                <span class="tech">Scikit-learn</span>
+                <span class="tech">Joblib</span>
+                <span class="tech">HTML5</span>
+                <span class="tech">CSS3</span>
+                <span class="tech">JavaScript / Charts (if used)</span>
+            </div>
+        </section>
+
+        <section class="notice">
+            <div class="notice-icon">ⓘ</div>
+            <div>
+                <h3>Responsible Use of Predictions</h3>
+                <p>
+                    An estimated attrition probability is not a guarantee
+                    that an employee will leave. Predictions depend on the
+                    training data, model quality and the details supplied.
+                    This project is intended for educational and analytical
+                    purposes; predictions should not be used as the sole
+                    basis for employment decisions.
+                </p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <strong>AttritionAI</strong> · Employee Attrition Prediction Project<br>
+            A machine learning project demonstrating employee analytics and risk estimation.
+        </footer>
+
+    </main>
+</div>
+</body>
+</html>
