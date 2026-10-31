@@ -117,7 +117,7 @@ Follow these steps to run the project locally.
 ### 1. Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/anshika55707-lgtm/AttritionAI.git
 ```
 
 ### 2. Navigate to the Project Folder
