@@ -169,3 +169,16 @@ It aims to demonstrate how data analytics and machine learning can support bette
 
 
 **Developed as an AI & Data Science project.**
+## 📸 Project Screenshots
+
+### 1. Dashboard
+![Dashboard](screenshots/Screenshot%20%28206%29.png)
+
+### 2. Employee Analysis
+![Employee Analysis](screenshots/Screenshot%20%28207%29.png)
+
+### 3. Risk Prediction
+![Risk Prediction](screenshots/Screenshot%20%28208%29.png)
+
+### 4. Prediction Result
+![Prediction Result](screenshots/Screenshot%20%28209%29.png)
