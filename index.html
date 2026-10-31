@@ -1,0 +1,604 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AttritionAI | Risk Prediction</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fc;
+            color: #202542;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Fixed sidebar */
+        .sidebar {
+            width: 245px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #171b35;
+            color: white;
+            padding: 28px 18px;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            margin: 0 10px 10px;
+        }
+
+        .logo span {
+            color: #9b7bff;
+        }
+
+        .tagline {
+            color: #a6acc7;
+            font-size: 12px;
+            margin: 0 10px 38px;
+        }
+
+        .nav-label {
+            color: #858baa;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            margin: 0 12px 14px;
+        }
+
+        .nav-item {
+            display: block;
+            text-decoration: none;
+            color: #c1c6dd;
+            padding: 14px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: white;
+            background: linear-gradient(100deg, #6553d9, #8065ed);
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            border-top: 1px solid #343953;
+            padding: 18px 8px 0;
+            color: #a6acc7;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* Main area */
+        .main {
+            margin-left: 245px;
+            padding: 32px;
+            width: calc(100% - 245px);
+            min-width: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .eyebrow {
+            color: #7661dc;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            margin-bottom: 9px;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 9px;
+        }
+
+        .muted {
+            color: #777e98;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .status {
+            background: #e5f8ef;
+            color: #188451;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .welcome {
+            background: linear-gradient(110deg, #25294e, #5541a7);
+            color: white;
+            padding: 26px 28px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #e0def8;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .section-heading {
+            font-size: 18px;
+            margin: 27px 0 16px;
+        }
+
+        /* Overview cards */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #ececf5;
+            border-radius: 15px;
+            padding: 22px;
+            box-shadow: 0 5px 18px rgba(30, 35, 80, 0.04);
+            min-width: 0;
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .stat-card h3 {
+            font-size: 13px;
+            color: #777e98;
+            font-weight: normal;
+        }
+
+        .stat-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 37px;
+            height: 37px;
+            border-radius: 11px;
+            background: #eeeaff;
+            color: #6954d5;
+            font-size: 18px;
+        }
+
+        .stat-value {
+            font-size: 26px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .stat-note {
+            font-size: 12px;
+            color: #858ba2;
+            margin-top: 7px;
+        }
+
+        /* Prediction form */
+        .form-card {
+            background: white;
+            border: 1px solid #ececf5;
+            border-radius: 17px;
+            padding: 27px;
+            box-shadow: 0 5px 18px rgba(30, 35, 80, 0.04);
+        }
+
+        .form-card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            color: #858ba2;
+            font-size: 13px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .form-section-title {
+            font-size: 14px;
+            color: #6553d9;
+            font-weight: bold;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #eeeef6;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+            margin-bottom: 27px;
+        }
+
+        .field {
+            min-width: 0;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 9px;
+            color: #333956;
+        }
+
+        .field input,
+        .field select {
+            display: block;
+            width: 100%;
+            min-width: 0;
+            padding: 12px;
+            border: 1px solid #dfe3ef;
+            border-radius: 9px;
+            background: #fff;
+            color: #202542;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #8065ed;
+            box-shadow: 0 0 0 3px rgba(128, 101, 237, 0.12);
+        }
+
+        .button-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .button {
+            border: none;
+            border-radius: 10px;
+            padding: 14px 23px;
+            background: linear-gradient(100deg, #6553d9, #8065ed);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(101, 83, 217, 0.25);
+        }
+
+        .note {
+            font-size: 12px;
+            color: #858ba2;
+            line-height: 1.6;
+        }
+
+        .footer-note {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 12px;
+            background: #eeecfb;
+            color: #5c548b;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1100px) {
+            .form-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 650px) {
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 20px;
+            }
+
+            .tagline {
+                margin-bottom: 20px;
+            }
+
+            .sidebar-bottom {
+                margin-top: 18px;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px 15px;
+            }
+
+            .stats,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card {
+                padding: 20px 16px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="logo">Attrition<span>AI</span></div>
+        <div class="tagline">Employee Analytics Platform</div>
+
+        <div class="nav-label">MAIN MENU</div>
+
+        <a href="{{ url_for('home') }}" class="nav-item">
+            ▦ &nbsp; Dashboard
+        </a>
+
+        <a href="{{ url_for('analysis') }}" class="nav-item">
+            ◫ &nbsp; Employee Analysis
+        </a>
+
+        <a href="{{ url_for('predict') }}" class="nav-item active">
+            ◎ &nbsp; Risk Prediction
+        </a>
+
+        <a href="{{ url_for('about') }}" class="nav-item">
+            ⓘ &nbsp; About Project
+        </a>
+
+        <div class="sidebar-bottom">
+            <strong>AttritionAI</strong><br>
+            ML-powered workforce insights
+        </div>
+    </aside>
+
+    <main class="main">
+
+        <header class="header">
+            <div>
+                <div class="eyebrow">MACHINE LEARNING</div>
+                <h1>Risk Prediction</h1>
+                <p class="muted">
+                    Assess employee attrition risk using the trained ML model.
+                </p>
+            </div>
+
+            <div class="status">● Model Loaded</div>
+        </header>
+
+        <section class="welcome">
+            <h2>Employee Risk Assessment</h2>
+            <p>
+                Enter the employee details below to generate a prediction
+                from your trained Logistic Regression model. Review the
+                predicted risk alongside the model's estimated probability.
+            </p>
+        </section>
+
+        <h2 class="section-heading">Dataset Overview</h2>
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <h3>Dataset Employees</h3>
+                    <span class="stat-icon">♙</span>
+                </div>
+                <div class="stat-value">{{ total_employees | default(1470) }}</div>
+                <div class="stat-note">Employees in the dataset</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <h3>Dataset Attrition Rate</h3>
+                    <span class="stat-icon">↗</span>
+                </div>
+                <div class="stat-value">
+                    {{ attrition_rate | default(16.12) }}%
+                </div>
+                <div class="stat-note">Historical dataset rate</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-top">
+                    <h3>Prediction Algorithm</h3>
+                    <span class="stat-icon">✦</span>
+                </div>
+                <div class="stat-value">Logistic Regression</div>
+                <div class="stat-note">Saved machine learning model</div>
+            </div>
+
+        </section>
+
+        <h2 class="section-heading">Employee Information</h2>
+
+        <section class="form-card">
+            <h2>Enter Employee Details</h2>
+            <p class="section-description">
+                Complete the fields below. The model uses these inputs along
+                with additional default values configured in the Flask app.
+            </p>
+
+            <form id="employeeForm" action="{{ url_for('predict') }}" method="POST">
+
+                <div class="form-section-title">Personal & Employment Details</div>
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label for="age">Age</label>
+                        <input id="age" name="age" type="number"
+                               min="18" max="65" value="29" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="department">Department</label>
+                        <select id="department" name="department" required>
+                            <option value="Research &amp; Development">
+                                Research &amp; Development
+                            </option>
+                            <option value="Sales">Sales</option>
+                            <option value="Human Resources">Human Resources</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="jobRole">Job Role</label>
+                        <select id="jobRole" name="jobRole" required>
+                            <option value="Research Scientist">Research Scientist</option>
+                            <option value="Laboratory Technician">Laboratory Technician</option>
+                            <option value="Manufacturing Director">Manufacturing Director</option>
+                            <option value="Healthcare Representative">Healthcare Representative</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Sales Executive">Sales Executive</option>
+                            <option value="Sales Representative">Sales Representative</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Research Director">Research Director</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="income">Monthly Income</label>
+                        <input id="income" name="income" type="number"
+                               min="1000" value="3000" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="years">Years at Company</label>
+                        <input id="years" name="years" type="number"
+                               min="0" max="50" value="2" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="overtime">Overtime</label>
+                        <select id="overtime" name="overtime" required>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="satisfaction">Job Satisfaction</label>
+                        <select id="satisfaction" name="satisfaction" required>
+                            <option value="1">1 - Low</option>
+                            <option value="2" selected>2 - Medium</option>
+                            <option value="3">3 - High</option>
+                            <option value="4">4 - Very High</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="travel">Business Travel</label>
+                        <select id="travel" name="travel" required>
+                            <option value="Travel_Rarely">Travel Rarely</option>
+                            <option value="Travel_Frequently">Travel Frequently</option>
+                            <option value="Non-Travel">Non-Travel</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="marital">Marital Status</label>
+                        <select id="marital" name="marital" required>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Divorced">Divorced</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="button-row">
+                    <button class="button" type="submit">
+                        Generate Prediction &nbsp; →
+                    </button>
+
+                    <p id="message" class="note" aria-live="polite">
+                        Check the employee details before generating a prediction.
+                    </p>
+                </div>
+
+            </form>
+        </section>
+
+        <div class="footer-note">
+            <strong>Important:</strong> This prediction is a model-generated
+            estimate, not a certainty about an employee's future. Some employee
+            attributes are assigned default values in the current Flask route.
+            Use the output as an analytical aid, not as the sole basis for
+            employment decisions.
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const form = document.getElementById("employeeForm");
+    const message = document.getElementById("message");
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    form.addEventListener("submit", function () {
+        message.textContent = "Generating prediction. Please wait...";
+        submitButton.textContent = "Processing...";
+        submitButton.disabled = true;
+        submitButton.style.opacity = "0.7";
+        submitButton.style.cursor = "wait";
+    });
+</script>
+
+</body>
+</html>
